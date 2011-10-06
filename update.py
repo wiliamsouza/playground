@@ -22,7 +22,7 @@ for path, directories, files in os.walk('.'):
             if '.bzr' in subdirectories:
 		print 'Found bazar repository at: %s' % subpath
                 os.chdir(subpath)
-                subprocess.Popen('/usr/bin/bzr merge', shell=True)
+                subprocess.Popen('/usr/bin/bzr pull', shell=True)
                 os.chdir('..')
 		break
 
