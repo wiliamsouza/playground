@@ -3,33 +3,34 @@ import socket
 import logging
 
 import multiprocessing
-from multiprocessing import Process
+from multiprocessing import Process, Event
 
 class BroadcastServer(Process):
 
     def __init__(self, ip, port, name='BroadcastServer'):
         Process.__init__(self, name=name)
         self.logger = multiprocessing.get_logger()
+        self.event = Event()
         self.message = 'bcastserv'
-        self._running = True
-        self._ip = ip
-        self._port = port
-        self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self._sock.bind(('', 0))
+        self.ip = ip
+        self.port = port
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.bind(('', 0))
 
     def run(self):
+        self.event.set()
         self.logger.info('PID: %d' % multiprocessing.current_process().pid)
-        while self._running:
-            self.logger.debug('Running: %s' % self._running)
+        while self.event.is_set():
             self.logger.info('Sending: %s' % self.message)
-            self._sock.sendto(self.message, (self._ip, self._port))
+            self.sock.sendto(self.message, (self.ip, self.port))
             time.sleep(1)
 
-    def halt(self):
+    def stop(self):
         self.logger.info('Server will halt.')
-        self._running = False
+        self.event.clear()
+        self.terminate()
 
 
 class BroadcastClient(Process):
@@ -37,23 +38,25 @@ class BroadcastClient(Process):
     def __init__(self, port, name='BroadcastClient'):
         Process.__init__(self, name=name)
         self.logger = multiprocessing.get_logger()
-        self._running = True
-        self._port = port
-        self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self._sock.bind(('', self._port))
+        self.event = Event()
+        self.port = port
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.bind(('', self.port))
 
     def run(self):
+        self.event.set()
         self.logger.info('PID: %d' % multiprocessing.current_process().pid)
-        while self._running:
-            message, (ip, port) = self._sock.recvfrom(30)
+        while self.event.is_set():
+            message, (ip, port) = self.sock.recvfrom(30)
             self.logger.info('Received: %s from: %s' % (message, ip))
             time.sleep(1)
 
-    def halt(self):
+    def stop(self):
         self.logger.info('Client will halt.')
-        self._running = False
+        self.event.clear()
+        self.terminate()
 
 
 if __name__ == '__main__':
@@ -62,8 +65,10 @@ if __name__ == '__main__':
     client = BroadcastClient(65535)
     server.start()
     client.start()
+
     time.sleep(6)
-    server.halt()
-    client.halt()
+
+    server.stop()
+    client.stop()
     server.join()
     client.join()
