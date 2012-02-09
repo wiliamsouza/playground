@@ -5,8 +5,6 @@ import logging
 import multiprocessing
 from multiprocessing import Process, Event
 
-from pydispatch import dispatcher
-
 from broadcast.signals import teacher_discovered
 
 class BroadcastServer(Process):
@@ -56,7 +54,7 @@ class BroadcastClient(Process):
         while self.event.is_set():
             try:
                 message, (ip, port) = self.sock.recvfrom(self.datagram_size)
-                dispatcher.send(signal=teacher_discovered, sender=self)
+                teacher_discovered.send(sender=self)
                 self.logger.debug('Received: %s from: %s' % (message, ip))
             except socket.timeout:
                 self.logger.debug('%s timeout' % multiprocessing.current_process().name)

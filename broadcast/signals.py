@@ -1,1 +1,3 @@
-teacher_discovered = 'teacher_discovered'
+from dispatch import Signal
+
+teacher_discovered = Signal()
