@@ -2,16 +2,14 @@ import logging
 
 import multiprocessing
 
-from pydispatch import dispatcher
-
 from broadcast import BroadcastClient
 from broadcast.signals import teacher_discovered
 
-def handle_teacher_discovery_event(sender):
+def handle_teacher_discovery_event(signal, sender):
     print 'New teacher available'
     print 'Signal sent by ', sender
 
-dispatcher.connect(handle_teacher_discovery_event, signal=teacher_discovered, sender=dispatcher.Any)
+teacher_discovered.connect(handle_teacher_discovery_event)
 
 if __name__ == '__main__':
     multiprocessing.log_to_stderr(logging.INFO)
