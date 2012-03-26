@@ -1,5 +1,6 @@
 # globs, anywhere.
 *.pyc
+*.swp
 
 # specific dirs
 #docs/_build
