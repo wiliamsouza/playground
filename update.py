@@ -32,4 +32,5 @@ for path, directories, files in os.walk('.'):
                 subprocess.Popen('/usr/bin/hg pull', shell=True)
                 os.chdir('..')
                 break
+            break
     break
