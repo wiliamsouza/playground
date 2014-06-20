@@ -13,7 +13,7 @@ sudo yum -y install screen gnome-tweak-tool vim python-flake8 \
     curl tree python-pip python-virtualenvwrapper python-virtualenv-clone\
     python-tox python-virtualenv make automake gcc gcc-c++ openssl-devel \
     zlib-devel bzip2-devel readline-devel libsqlite3x-devel wget llvm \
-    python-jedi python-devel python-ipdb ipython libyaml-devel
+    python-jedi python-devel python-ipdb ipython libyaml-devel bzr gitflow
 
 echo "Installing fig"
 pip install --user fig
