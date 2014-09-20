@@ -56,6 +56,7 @@ git clone https://github.com/scrooloose/nerdtree.git \
 
 echo "Intalling rbenv"
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 echo "Installing pyenv"
 git clone git://github.com/yyuu/pyenv.git $HOME/.pyenv
