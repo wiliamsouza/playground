@@ -13,7 +13,7 @@ sudo apt-get install -y openssh-server git gnome-tweak-tool vim tmux screen \
     python-flake8 curl tree python-pip virtualenvwrapper virtualenv-clone \
     python-virtualenv make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget llvm python-jedi python-dev ipython \
-    python-ipdb python-tox libyaml-dev
+    python-ipdb python-tox libyaml-dev bzr mercurial
 
 echo "Installing fig"
 pip install --user fig
@@ -62,6 +62,7 @@ git clone --recursive https://github.com/davidhalter/jedi-vim.git \
 
 echo "Intalling rbenv"
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 echo "Installing pyenv"
 git clone git://github.com/yyuu/pyenv.git $HOME/.pyenv
