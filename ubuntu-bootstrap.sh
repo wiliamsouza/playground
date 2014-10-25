@@ -22,7 +22,6 @@ echo "Installing docker"
 sudo apt-get install docker.io -y
 sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
 sudo usermod --append --groups docker $USER
-exec sudo su -l $USER
 echo "Your user was added to docker group."
 echo "To this change take place you need to login again."
 
@@ -32,8 +31,9 @@ if [ ! -d $DOT_REPO_DIR ]; then
     pushd $DOT_REPO_DIR
     bash install.sh
     popd
-    source $HOME/.bashrc
 fi
+
+source $HOME/.bashrc
 
 echo "Installing vim plugins"
 mkdir -p $HOME/.vim/autoload
@@ -54,11 +54,14 @@ git clone https://github.com/plasticboy/vim-markdown.git \
 git clone git://github.com/tpope/vim-fugitive.git \
     $HOME/.vim/bundle/vim-fugitive
 
-git clone git clone https://github.com/scrooloose/nerdtree.git \
+git clone https://github.com/scrooloose/nerdtree.git \
     $HOME/.vim/bundle/nerdtree
 
 git clone --recursive https://github.com/davidhalter/jedi-vim.git \
     $HOME/.vim/bundle/jedi-vim
+
+git clone https://github.com/kien/ctrlp.vim.git \
+    $HOME/.vim/bundle/ctrlp.vim.git
 
 echo "Intalling rbenv"
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
