@@ -60,6 +60,9 @@ git clone git clone https://github.com/scrooloose/nerdtree.git \
 git clone --recursive https://github.com/davidhalter/jedi-vim.git \
     $HOME/.vim/bundle/jedi-vim
 
+git clone git://github.com/altercation/vim-colors-solarized.git \
+    $HOME/.vim/bundle/vim-colors-solarized
+
 echo "Intalling rbenv"
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
 git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
