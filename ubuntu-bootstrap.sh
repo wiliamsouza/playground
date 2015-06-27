@@ -13,14 +13,14 @@ sudo apt-get install -y openssh-server git gnome-tweak-tool vim tmux screen \
     python-flake8 curl tree python-pip virtualenvwrapper virtualenv-clone \
     python-virtualenv make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget llvm python-jedi python-dev ipython \
-    python-ipdb python-tox libyaml-dev bzr mercurial
+    libyaml-dev bzr mercurial
 
-echo "Installing fig"
-pip install --user fig
+echo "Installing docker-compose"
+curl -L https://github.com/docker/compose/releases/download/1.3.1/docker-compose-`uname -s`-`uname -m` > $LOCAL_BIN/docker-compose
+chmod +x $LOCAL_BIN/docker-compose
 
 echo "Installing docker"
-sudo apt-get install docker.io -y
-sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
+wget -qO- https://get.docker.com/ | sh
 sudo usermod --append --groups docker $USER
 echo "Your user was added to docker group."
 echo "To this change take place you need to login again."
