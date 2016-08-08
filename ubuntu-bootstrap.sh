@@ -78,11 +78,11 @@ if [ ! -f $HOME/.local/bin/terraform ]; then
 fi
 
 echo "Installing heroku toolbelt"
-wget --quiet -O - https://toolbelt.heroku.com/install-ubuntu.sh | sh
+wget --quiet -O - https://toolbelt.heroku.com/install-ubuntu.sh | sudo sh
 
 echo "Installing golang"
 wget --quiet -O - https://godeb.s3.amazonaws.com/godeb-amd64.tar.gz | tar zxvf - -C $HOME/.local/bin/
-godeb install $tO_VERSION
+godeb install $GO_VERSION
 
 echo "Intalling rbenv"
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
