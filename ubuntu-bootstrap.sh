@@ -4,23 +4,27 @@ DEVEL_DIR=$HOME/devel
 SOURCE_DIR=$HOME/source
 LOCAL_BIN=$HOME/.local/bin
 DOT_REPO_DIR=$SOURCE_DIR/dot
-PYTHON_VERION=3.5.2
-RUBY_VERSION=2.3.1
-GO_VERSION=1.6.3
+PYTHON_VERION=3.6.0
+RUBY_VERSION=2.4.0
+GO_VERSION=1.7.4
+DOCKER_COMPOSE_VERSION=1.9.0
+TERRAFORM_VERSION=0.8.2
 
 mkdir -p $DEVEL_DIR
 mkdir -p $SOURCE_DIR
 mkdir -p $LOCAL_BIN
 
-sudo apt-get install -y openssh-server git gnome-tweak-tool vim tmux screen \
+sudo apt-get install -y git gnome-tweak-tool vim tmux screen \
     curl tree apt-transport-https ca-certificates  ack-grep \
     make build-essential libssl-dev zlib1g-dev libbz2-dev \
-    libreadline-dev libsqlite3-dev wget python-dev ipython \
-    libyaml-dev bzr mercurial linux-image-extra-$(uname -r)
+    libreadline-dev libsqlite3-dev wget python-dev \
+    libyaml-dev linux-image-extra-$(uname -r) xclip vagrant virtualbox \
+    libpq-dev libxml2-dev libxslt1-dev zlib1g-dev jq
+
 
 echo "Installing docker-compose"
 if [ ! -f $LOCAL_BIN/docker-compose ]; then
-    curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > $LOCAL_BIN/docker-compose
+    curl -L https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > $LOCAL_BIN/docker-compose
     chmod +x $LOCAL_BIN/docker-compose
 fi
 
@@ -45,6 +49,11 @@ fi
 echo "Installing vim plugins"
 mkdir -p $HOME/.vim/bundle
 git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
+
+echo "Installing system powerline"
+wget --quiet -O - https://bootstrap.pypa.io/get-pip.py | sudo /urs/bin/python3.5 -
+sudo /usr/bin/pip3.5 install git+git://github.com/Lokaltog/powerline
 
 echo "Installing pyenv"
 git clone git://github.com/yyuu/pyenv.git $HOME/.pyenv
@@ -60,6 +69,7 @@ pip install virtualenv
 pip install virtualenvwrapper
 
 echo "Installing powerline"
+wget --quiet -O - https://bootstrap.pypa.io/get-pip.py | sudo python -
 pip install git+git://github.com/Lokaltog/powerline
 mkdir -p $HOME/.fonts
 mkdir -p $HOME/.fonts.conf.d
@@ -71,7 +81,7 @@ fc-cache -vf $HOME/.fonts
 
 echo "Installing terraform"
 if [ ! -f $HOME/.local/bin/terraform ]; then
-    wget --quiet -O $HOME/.local/bin/terraform.zip https://releases.hashicorp.com/terraform/0.7.0/terraform_0.7.0_linux_amd64.zip
+    wget --quiet -O $HOME/.local/bin/terraform.zip https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_linux_amd64.zip
     cd $HOME/.local/bin/
     unzip terraform.zip
     cd -
@@ -97,3 +107,46 @@ rbenv global $RUBY_VERSION
 
 echo "Installing terraforming"
 gem install terraforming
+
+echo "Installing kubernetes"
+curl -sS https://get.k8s.io | bash
+export KUBERNETES_PROVIDER=vagrant
+export KUBERNETES_MASTER_MEMORY=1536
+export KUBERNETES_NODE_MEMORY=4096
+cd kubernetes
+#./cluster/kube-up.sh
+
+echo "Instaling deis CLI"
+if [ ! -f $HOME/.local/bin/deis ]; then
+    curl -sSL http://deis.io/deis-cli/install-v2.sh | bash
+    sudo mv $PWD/deis $HOME/.local/bin/
+fi
+
+echo "Installing helm"
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+
+echo "Installing tmate"
+sudo apt-get install software-properties-common && \
+    sudo add-apt-repository ppa:tmate.io/archive && \
+    sudo apt-get update && \
+    sudo apt-get install tmate
+
+
+echo "Installing ngrok"
+if [ ! -f $HOME/.local/bin/ngrok ]; then
+    wget --quiet -O $HOME/.local/bin/ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+    cd $HOME/.local/bin/
+    unzip ngrok.zip
+    cd -
+fi
+
+echo "Installing ok.sh"
+if [ ! -f $HOME/.local/bin/ok.sh ]; then
+    wget --quiet -O $HOME/.local/bin/ok.sh.zip https://github.com/whiteinge/ok.sh/archive/0.2.2.zip
+    cd $HOME/.local/bin/
+    unzip ok.sh.zip
+    cd -
+fi
+
+echo "Installing glide"
+curl https://glide.sh/get | sh
