@@ -19,7 +19,7 @@ sudo apt-get install -y git gnome-tweak-tool vim tmux screen \
     make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget python-dev \
     libyaml-dev linux-image-extra-$(uname -r) xclip vagrant virtualbox \
-    libpq-dev libxml2-dev libxslt1-dev zlib1g-dev jq
+    libpq-dev libxml2-dev libxslt1-dev zlib1g-dev jq silversearcher-ag
 
 
 echo "Installing docker-compose"
