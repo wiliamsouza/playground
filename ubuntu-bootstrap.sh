@@ -1,13 +1,13 @@
 #!/bin/bash
 
-DEVEL_DIR=$HOME/devel
-SOURCE_DIR=$HOME/source
+DEVEL_DIR=$HOME/Development
+SOURCE_DIR=$HOME/Development
 LOCAL_BIN=$HOME/.local/bin
 DOT_REPO_DIR=$SOURCE_DIR/dot
-PYTHON_VERION=3.7.0
-RUBY_VERSION=2.4.0
-GO_VERSION=1.11
-DOCKER_COMPOSE_VERSION=1.22.0
+PYTHON_VERION=3.7.3
+RUBY_VERSION=2.6.3
+GO_VERSION=1.12.4
+DOCKER_COMPOSE_VERSION=1.24.0
 TERRAFORM_VERSION=0.8.2
 
 mkdir -p $DEVEL_DIR
@@ -18,8 +18,8 @@ sudo apt-get install -y git gnome-tweak-tool vim tmux screen \
     curl tree apt-transport-https ca-certificates  ack-grep \
     make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget python-dev \
-    libyaml-dev xclip libpq-dev libxml2-dev \
-    libxslt1-dev zlib1g-dev jq silversearcher-ag
+    libyaml-dev xclip libpq-dev libxml2-dev libffi-dev neovim \
+    libxslt1-dev zlib1g-dev jq silversearcher-ag fonts-powerline
 
 
 echo "Installing docker-compose"
@@ -35,11 +35,6 @@ if [ ! -d $DOT_REPO_DIR ]; then
     bash install.sh
     cd -
 fi
-
-echo "Installing vim plugins"
-mkdir -p $HOME/.vim/bundle
-git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
 
 echo "Installing pyenv"
 git clone git://github.com/yyuu/pyenv.git $HOME/.pyenv
