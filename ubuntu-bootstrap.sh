@@ -13,13 +13,15 @@ mkdir -p $DEVEL_DIR
 mkdir -p $SOURCE_DIR
 mkdir -p $LOCAL_BIN
 
+sudo add-apt-repository y ppa:neovim-ppa/stable
+sudo apt-get update
 sudo apt-get install -y git gnome-tweak-tool vim tmux screen \
     curl tree apt-transport-https ca-certificates  ack-grep \
     make build-essential libssl-dev zlib1g-dev libbz2-dev \
     libreadline-dev libsqlite3-dev wget python-dev \
     libyaml-dev xclip libpq-dev libxml2-dev libffi-dev neovim \
-    libxslt1-dev zlib1g-dev jq silversearcher-ag fonts-powerline
-
+    libxslt1-dev zlib1g-dev jq silversearcher-ag fonts-powerline \
+    python3-neovim
 
 echo "Installing docker-compose"
 if [ ! -f $LOCAL_BIN/docker-compose ]; then
@@ -47,6 +49,7 @@ pyenv global $PYTHON_VERION
 wget --quiet -O - https://bootstrap.pypa.io/get-pip.py | python -
 pip install virtualenv
 pip install virtualenvwrapper
+pip install pynvim
 
 echo "Installing golang"
 wget --quiet -O - https://godeb.s3.amazonaws.com/godeb-amd64.tar.gz | tar zxvf - -C $HOME/.local/bin/
