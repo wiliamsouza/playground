@@ -29,6 +29,10 @@ if [ ! -f $LOCAL_BIN/docker-compose ]; then
     chmod +x $LOCAL_BIN/docker-compose
 fi
 
+echo "Installing docker"
+sudo addgroup --system docker
+sudo adduser $USER docker
+sudo snap install docker
 
 if [ ! -d $DOT_REPO_DIR ]; then
     git clone https://github.com/wiliamsouza/dot.git $DOT_REPO_DIR
