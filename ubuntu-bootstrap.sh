@@ -13,8 +13,9 @@ mkdir -p $DEVEL_DIR
 mkdir -p $SOURCE_DIR
 mkdir -p $LOCAL_BIN
 
-sudo add-apt-repository y ppa:neovim-ppa/stable
+sudo add-apt-repository -y ppa:neovim-ppa/stable
 sudo apt-get update
+
 sudo apt-get install -y git gnome-tweak-tool vim tmux screen \
     curl tree apt-transport-https ca-certificates  ack-grep \
     make build-essential libssl-dev zlib1g-dev libbz2-dev \
