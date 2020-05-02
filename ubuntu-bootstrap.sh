@@ -58,6 +58,7 @@ wget --quiet -O - https://bootstrap.pypa.io/get-pip.py | python -
 pip install virtualenv
 pip install virtualenvwrapper
 pip install pynvim
+pip install pywal
 
 echo "Installing golang"
 wget --quiet -O - https://godeb.s3.amazonaws.com/godeb-amd64.tar.gz | tar zxvf - -C $HOME/.local/bin/
