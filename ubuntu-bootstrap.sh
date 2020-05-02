@@ -85,7 +85,6 @@ nodenv rehash
 nodenv global $NODE_VERSION
 
 echo "Installing Elixir"
-##wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
-##sudo apt-get update
-##sudo apt-get install esl-erlang
-sudo apt-get install elixir
+wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
+sudo apt-get update
+sudo apt-get install esl-erlang
