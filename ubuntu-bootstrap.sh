@@ -64,9 +64,10 @@ pip install virtualenv
 pip install virtualenvwrapper
 pip install pynvim
 pip install pywal
+pip install powerline-status
 
 echo "Installing golang"
-wget --quiet -O - https://godeb.s3.amazonaws.com/godeb-amd64.tar.gz | tar zxvf - -C $HOME/.local/bin/
+wget --quiet -O - https://godeb.s3.amazonaws.com/godeb-amd64.tar.gz | tar zxvf - -C $LOCAL_BIN
 godeb install $GO_VERSION
 
 echo "Installing rbenv"
