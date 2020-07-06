@@ -89,6 +89,7 @@ eval "$(nodenv init -)"
 nodenv install $NODE_VERSION
 nodenv rehash
 nodenv global $NODE_VERSION
+npm install -g  diff-so-fancy
 
 echo "Installing Elixir"
 wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
