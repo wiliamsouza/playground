@@ -25,7 +25,12 @@ sudo apt-get install -y git gnome-tweak-tool vim tmux screen \
     libreadline-dev libsqlite3-dev wget python-dev \
     libyaml-dev xclip libpq-dev libxml2-dev libffi-dev neovim \
     libxslt1-dev zlib1g-dev jq silversearcher-ag fonts-powerline \
-    python3-neovim i3 inotify-tools imagemagick feh
+    python3-neovim i3 inotify-tools imagemagick feh cpu-checker \
+    qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils \
+
+echo "Configuring quemu"
+sudo adduser `id -un` libvirt
+sudo adduser `id -un` kvm
 
 echo "Installing docker-compose"
 if [ ! -f $LOCAL_BIN/docker-compose ]; then
