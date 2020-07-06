@@ -95,3 +95,13 @@ echo "Installing Elixir"
 wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
 sudo apt-get update
 sudo apt-get install esl-erlang
+
+echo "Installing Pulumi"
+curl -fsSL https://get.pulumi.com | sh
+
+echo "Installing minikube"
+curl -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 > $LOCAL_BIN/minikube \
+    && chmod +x $LOCAL_BIN/minikube
+
+curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl > $LOCAL_BIN/kubectl \
+    && chmod +x $LOCAL_BIN/kubectl
