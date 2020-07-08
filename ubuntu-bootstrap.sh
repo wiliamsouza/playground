@@ -27,6 +27,7 @@ sudo apt-get install -y git gnome-tweak-tool vim tmux screen \
     libxslt1-dev zlib1g-dev jq silversearcher-ag fonts-powerline \
     python3-neovim i3 inotify-tools imagemagick feh cpu-checker \
     qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils \
+    fzy
 
 echo "Configuring quemu"
 sudo adduser `id -un` libvirt
@@ -89,7 +90,8 @@ eval "$(nodenv init -)"
 nodenv install $NODE_VERSION
 nodenv rehash
 nodenv global $NODE_VERSION
-npm install -g  diff-so-fancy
+npm install --global  diff-so-fancy
+npm install --global lerna
 
 echo "Installing Elixir"
 wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb
