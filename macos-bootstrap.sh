@@ -24,7 +24,7 @@ fi
 echo "Install brew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-brew install wget neovim tree
+brew install wget neovim tree the_silver_searcher hub
 
 echo "Installing pyenv"
 git clone git://github.com/yyuu/pyenv.git $HOME/.pyenv
