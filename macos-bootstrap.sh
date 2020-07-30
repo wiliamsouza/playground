@@ -66,3 +66,6 @@ nodenv global $NODE_VERSION
 npm install --global  diff-so-fancy
 npm install --global lerna
 npm install -g neovim
+
+echo "Installing istio"
+curl -L https://istio.io/downloadIstio | sh -
