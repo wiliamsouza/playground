@@ -44,7 +44,7 @@ pip install powerline-status
 
 echo "Installing rbenv"
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
-git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+git clone https://github.com/sstephenson/ruby-build.git $HOME/.rbenv/plugins/ruby-build
 export RBENV_ROOT=$HOME/.rbenv
 export PATH=$RBENV_ROOT/bin:$PATH
 eval "$(rbenv init -)"
@@ -56,8 +56,8 @@ gem install neovim
 gem environment
 
 echo "Installing nodenv"
-git clone https://github.com/nodenv/nodenv.git ~/.nodenv
-git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build
+git clone https://github.com/nodenv/nodenv.git $HOME/.nodenv
+git clone https://github.com/nodenv/node-build.git $HOME/.nodenv/plugins/node-build
 export PATH=$HOME/.nodenv/bin:$PATH
 eval "$(nodenv init -)"
 nodenv install $NODE_VERSION
