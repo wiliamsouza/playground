@@ -69,3 +69,7 @@ npm install -g neovim
 
 echo "Installing istio"
 curl -L https://istio.io/downloadIstio | sh -
+
+echo "Installing powerline fonts"
+git clone https://github.com/powerline/fonts.git --depth=1 $DEVEL_DIR
+./install.sh
