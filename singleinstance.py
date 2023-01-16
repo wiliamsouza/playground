@@ -20,15 +20,14 @@ class SingleInstance(object):
             self.pid_path = '/tmp/foo.pid'
             if os.path.exists(self.pid_path):
                 pid = open(self.pid_path, 'r').read().strip()
-                pid_running = commands.getoutput('ls /proc | grep %s' % pid)
+                pid_running = commands.getoutput(f'ls /proc | grep {pid}')
 
                 if pid_running:
                     self.last_error = True
 
             if not self.last_error:
-                f = open(self.pid_path, 'w')
-                f.write(str(os.getpid()))
-                f.close()
+                with open(self.pid_path, 'w') as f:
+                    f.write(str(os.getpid()))
 
     def is_running(self):
         if system.get_os() == "Windows":
@@ -40,6 +39,5 @@ class SingleInstance(object):
         if system.get_os() == "Windows":
             if self.mutex:
                 CloseHandle(self.mutex)
-        else:
-            if not self.last_error:
-                os.unlink(self.pid_path)
+        elif not self.last_error:
+            os.unlink(self.pid_path)

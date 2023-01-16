@@ -223,7 +223,7 @@ class Signal(object):
         receivers = []
 
         for (receiverkey, r_senderkey), receiver in self.receivers:
-            if r_senderkey == none_senderkey or r_senderkey == senderkey:
+            if r_senderkey in [none_senderkey, senderkey]:
                 if isinstance(receiver, WEAKREF_TYPES):
                     # Dereference the weak reference.
                     receiver = receiver()
@@ -240,10 +240,11 @@ class Signal(object):
 
         self.lock.acquire()
         try:
-            to_remove = []
-            for key, connected_receiver in self.receivers:
-                if connected_receiver == receiver:
-                    to_remove.append(key)
+            to_remove = [
+                key
+                for key, connected_receiver in self.receivers
+                if connected_receiver == receiver
+            ]
             for key in to_remove:
                 last_idx = len(self.receivers) - 1
                 # enumerate in reverse order so that indexes are valid even

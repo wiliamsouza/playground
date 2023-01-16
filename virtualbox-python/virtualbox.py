@@ -51,8 +51,7 @@ def cloneMachine(fromMachine, toMachine, mode, options):
 
     :returns: IProgress.
     '''
-    progress = fromMachine.cloneTo(toMachine, mode, options)
-    return progress
+    return fromMachine.cloneTo(toMachine, mode, options)
 
 
 def machines():

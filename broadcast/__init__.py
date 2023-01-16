@@ -25,7 +25,7 @@ class BroadcastServer(Process):
         self.event.set()
         self.logger.debug('PID: %d' % multiprocessing.current_process().pid)
         while self.event.is_set():
-            self.logger.debug('Sending: %s' % self.message)
+            self.logger.debug(f'Sending: {self.message}')
             self.sock.sendto(self.message, (self.ip, self.port))
             time.sleep(1)
 
@@ -55,9 +55,9 @@ class BroadcastClient(Process):
             try:
                 message, (ip, port) = self.sock.recvfrom(self.datagram_size)
                 teacher_discovered.send(sender=self)
-                self.logger.debug('Received: %s from: %s' % (message, ip))
+                self.logger.debug(f'Received: {message} from: {ip}')
             except socket.timeout:
-                self.logger.debug('%s timeout' % multiprocessing.current_process().name)
+                self.logger.debug(f'{multiprocessing.current_process().name} timeout')
             time.sleep(1)
 
     def stop(self):

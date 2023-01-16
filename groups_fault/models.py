@@ -49,10 +49,7 @@ class Group(QtCore.QObject):
 
     @classmethod
     def populate(cls):
-        groups = []
-        for group in GROUPS:
-            groups.append(cls(group))
-        return groups
+        return [cls(group) for group in GROUPS]
 
     changed = QtCore.Signal()
     gid = QtCore.Property(unicode, __getGid, notify=changed)
