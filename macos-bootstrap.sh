@@ -21,8 +21,7 @@ fi
 echo "Install brew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-brew tap bufbuild/buf
-brew install wget neovim tree the_silver_searcher hub kind kubectl jq buf helm
+brew install wget neovim tree the_silver_searcher jq
 
 echo "Installing pyenv"
 git clone https://github.com/rbenv/rbenv.git $HOME/.pyenv
