@@ -61,3 +61,6 @@ nodenv global $NODE_VERSION
 npm install --global  diff-so-fancy
 npm install --global lerna
 npm install -g neovim
+
+echo "Install oh my zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
