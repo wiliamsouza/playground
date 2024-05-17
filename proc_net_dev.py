@@ -2,8 +2,8 @@ lines = open("/proc/net/dev", "r").readlines()
 
 columnLine = lines[1]
 _, receiveCols , transmitCols = columnLine.split("|")
-receiveCols = map(lambda a:"recv_"+a, receiveCols.split())
-transmitCols = map(lambda a:"trans_"+a, transmitCols.split())
+receiveCols = map(lambda a: f"recv_{a}", receiveCols.split())
+transmitCols = map(lambda a: f"trans_{a}", transmitCols.split())
 
 cols = receiveCols+transmitCols
 

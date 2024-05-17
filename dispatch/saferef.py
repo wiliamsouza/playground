@@ -19,16 +19,11 @@ def safeRef(target, onDelete = None):
         goes out of scope with the reference object, (either a
         weakref or a BoundMethodWeakref) as argument.
     """
-    if hasattr(target, 'im_self'):
-        if target.im_self is not None:
-            # Turn a bound method into a BoundMethodWeakref instance.
-            # Keep track of these instances for lookup by disconnect().
-            assert hasattr(target, 'im_func'), """safeRef target %r has im_self, but no im_func, don't know how to create reference"""%( target,)
-            reference = get_bound_method_weakref(
-                target=target,
-                onDelete=onDelete
-            )
-            return reference
+    if hasattr(target, 'im_self') and target.im_self is not None:
+        # Turn a bound method into a BoundMethodWeakref instance.
+        # Keep track of these instances for lookup by disconnect().
+        assert hasattr(target, 'im_func'), """safeRef target %r has im_self, but no im_func, don't know how to create reference"""%( target,)
+        return get_bound_method_weakref(target=target, onDelete=onDelete)
     if callable(onDelete):
         return weakref.ref(target, onDelete)
     else:
@@ -133,7 +128,7 @@ class BoundMethodWeakref(object):
         self.selfName = str(target.im_self)
         self.funcName = str(target.im_func.__name__)
     
-    def calculateKey( cls, target ):
+    def calculateKey(self, target):
         """Calculate the reference key for this reference
 
         Currently this is a two-tuple of the id()'s of the
@@ -144,11 +139,7 @@ class BoundMethodWeakref(object):
     
     def __str__(self):
         """Give a friendly representation of the object"""
-        return """%s( %s.%s )"""%(
-            self.__class__.__name__,
-            self.selfName,
-            self.funcName,
-        )
+        return f"""{self.__class__.__name__}( {self.selfName}.{self.funcName} )"""
     
     __repr__ = __str__
     
@@ -158,9 +149,11 @@ class BoundMethodWeakref(object):
     
     def __cmp__( self, other ):
         """Compare with another reference"""
-        if not isinstance (other,self.__class__):
-            return cmp( self.__class__, type(other) )
-        return cmp( self.key, other.key)
+        return (
+            cmp(self.key, other.key)
+            if isinstance(other, self.__class__)
+            else cmp(self.__class__, type(other))
+        )
     
     def __call__(self):
         """Return a strong reference to the bound method
@@ -211,9 +204,9 @@ class BoundNonDescriptorMethodWeakref(BoundMethodWeakref):
             collected).  Should take a single argument,
             which will be passed a pointer to this object.
         """
-        assert getattr(target.im_self, target.__name__) == target, \
-               ("method %s isn't available as the attribute %s of %s" %
-                (target, target.__name__, target.im_self))
+        assert (
+            getattr(target.im_self, target.__name__) == target
+        ), f"method {target} isn't available as the attribute {target.__name__} of {target.im_self}"
         super(BoundNonDescriptorMethodWeakref, self).__init__(target, onDelete)
 
     def __call__(self):
