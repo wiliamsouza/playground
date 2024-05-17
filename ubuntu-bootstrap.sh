@@ -27,7 +27,7 @@ sudo apt-get install -y git gnome-tweaks vim tmux screen \
     libxslt1-dev zlib1g-dev jq silversearcher-ag fonts-powerline \
     i3 inotify-tools imagemagick feh cpu-checker \
     qemu-system-x86 libvirt-daemon-system libvirt-clients bridge-utils \
-    fzy lzma liblzma-dev libbz2-dev
+    fzy lzma liblzma-dev libbz2-dev flatpak gnome-software-plugin-flatpak
 
 #echo "Configuring quemu"
 #sudo adduser `id -un` libvirt
