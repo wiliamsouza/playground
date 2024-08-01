@@ -33,10 +33,6 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 flatpak install flathub org.freedesktop.Sdk.Extension.golang
 flatpak install flathub org.freedesktop.Sdk.Extension.node20
 
-echo "Installing neovim"
-flatpak install flathub io.neovim.nvim
-ln -s /home/wiliam/.config/nvim/ /home/wiliam/.var/app/io.neovim.nvim/config/
-
 echo "Installing docker-compose"
 if [ ! -f $LOCAL_BIN/docker-compose ]; then
     curl -L https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > $LOCAL_BIN/docker-compose
@@ -71,6 +67,11 @@ echo "Installing golang"
 wget --quiet -O - https://godeb.s3.amazonaws.com/godeb-amd64.tar.gz | tar zxvf - -C $LOCAL_BIN
 export PATH=$HOME/.local/bin:$PATH
 godeb install $GO_VERSION
+
+echo "Installing neovim"
+flatpak install flathub io.neovim.nvim
+ln -s /home/wiliam/.config/nvim/ /home/wiliam/.var/app/io.neovim.nvim/config/
+go install golang.org/x/tools/gopls@latest
 
 echo "Installing rbenv"
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
