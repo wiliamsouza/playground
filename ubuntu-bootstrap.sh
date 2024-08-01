@@ -5,18 +5,16 @@ DEVEL_DIR=$HOME/Development
 SOURCE_DIR=$HOME/Development
 LOCAL_BIN=$HOME/.local/bin
 DOT_REPO_DIR=$SOURCE_DIR/dot
-PYTHON_VERION=3.12.3
+PYTHON_VERION=3.12.4
 PYTHON2_VERION=2.7.18
-RUBY_VERSION=3.3.1
-GO_VERSION=1.22.2
-NODE_VERSION=22.1.0
-DOCKER_COMPOSE_VERSION=2.27.0
+RUBY_VERSION=3.3.4
+NODE_VERSION=22.5.1
+DOCKER_COMPOSE_VERSION=2.29.1
 
 mkdir -p $DEVEL_DIR
 mkdir -p $SOURCE_DIR
 mkdir -p $LOCAL_BIN
 
-##sudo add-apt-repository -y ppa:neovim-ppa/stable
 sudo apt-get update
 
 sudo apt-get install -y git gnome-tweaks vim tmux screen \
@@ -27,22 +25,23 @@ sudo apt-get install -y git gnome-tweaks vim tmux screen \
     libxslt1-dev zlib1g-dev jq silversearcher-ag fonts-powerline \
     i3 inotify-tools imagemagick feh cpu-checker \
     qemu-system-x86 libvirt-daemon-system libvirt-clients bridge-utils \
-    fzy lzma liblzma-dev libbz2-dev flatpak gnome-software-plugin-flatpak
+    fzy lzma liblzma-dev libbz2-dev flatpak gnome-software-plugin-flatpak \
+    gnome-software
 
-#echo "Configuring quemu"
-#sudo adduser `id -un` libvirt
-#sudo adduser `id -un` kvm
+echo "Configuring flatpak"
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub org.freedesktop.Sdk.Extension.golang
+flatpak install flathub org.freedesktop.Sdk.Extension.node20
+
+echo "Installing neovim"
+flatpak install flathub io.neovim.nvim
+ln -s /home/wiliam/.config/nvim/ /home/wiliam/.var/app/io.neovim.nvim/config/
 
 echo "Installing docker-compose"
 if [ ! -f $LOCAL_BIN/docker-compose ]; then
     curl -L https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > $LOCAL_BIN/docker-compose
     chmod +x $LOCAL_BIN/docker-compose
 fi
-
-echo "Installing docker"
-sudo addgroup --system docker
-sudo adduser $USER docker
-sudo snap install docker
 
 if [ ! -d $DOT_REPO_DIR ]; then
     git clone https://github.com/wiliamsouza/dot.git $DOT_REPO_DIR
@@ -94,3 +93,7 @@ nodenv rehash
 nodenv global $NODE_VERSION
 npm install --global  diff-so-fancy
 npm install --global lerna
+
+echo "Configuring git"
+git config --global user.email "wiliamsouza83@gmail.com"
+git config --global user.name "Wiliam Souza"
