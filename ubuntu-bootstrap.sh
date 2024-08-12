@@ -15,6 +15,7 @@ mkdir -p $DEVEL_DIR
 mkdir -p $SOURCE_DIR
 mkdir -p $LOCAL_BIN
 
+sudo add-apt-repository universe
 sudo apt-get update
 
 sudo apt-get install -y git gnome-tweaks vim tmux screen \
@@ -26,7 +27,7 @@ sudo apt-get install -y git gnome-tweaks vim tmux screen \
     i3 inotify-tools imagemagick feh cpu-checker \
     qemu-system-x86 libvirt-daemon-system libvirt-clients bridge-utils \
     fzy lzma liblzma-dev libbz2-dev flatpak gnome-software-plugin-flatpak \
-    gnome-software
+    gnome-software libfuse2
 
 echo "Configuring flatpak"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
