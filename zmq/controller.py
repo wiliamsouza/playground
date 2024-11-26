@@ -8,7 +8,7 @@ class Client(QtCore.QThread):
     def __init__(self, ip, port, parent=None):
         super(Client, self).__init__(parent)
         self.running = False
-        self.uri = 'tcp://%s:%s' % (ip, port)
+        self.uri = f'tcp://{ip}:{port}'
         self.message = None
 
     def run(self):
@@ -45,7 +45,7 @@ class Server(QtCore.QThread):
     def __init__(self, ip, port, parent=None):
         super(Server, self).__init__(parent)
         self.running = False
-        self.uri = 'tcp://%s:%s' % (ip, port)
+        self.uri = f'tcp://{ip}:{port}'
 
     def run(self):
         self.running = True
