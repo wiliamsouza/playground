@@ -5,10 +5,11 @@ DEVEL_DIR=$HOME/Development
 SOURCE_DIR=$HOME/Development
 LOCAL_BIN=$HOME/.local/bin
 DOT_REPO_DIR=$SOURCE_DIR/dot
-PYTHON_VERSION=3.11.2
-PYTHON2_VERSION=2.7.18
-RUBY_VERSION=3.2.1
-NODE_VERSION=19.7.0
+PYTHON_VERION=3.12.4
+PYTHON2_VERION=2.7.18
+RUBY_VERSION=3.3.4
+NODE_VERSION=22.5.1
+DOCKER_COMPOSE_VERSION=2.29.1
 
 mkdir -p $DEVEL_DIR
 mkdir -p $SOURCE_DIR
@@ -23,6 +24,19 @@ echo "Install brew"
 
 brew install wget neovim tree the_silver_searcher jq
 
+echo "Installing docker-compose"
+if [ ! -f $LOCAL_BIN/docker-compose ]; then
+    curl -L https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > $LOCAL_BIN/docker-compose
+    chmod +x $LOCAL_BIN/docker-compose
+fi
+
+if [ ! -d $DOT_REPO_DIR ]; then
+    git clone https://github.com/wiliamsouza/dot.git $DOT_REPO_DIR
+    cd $DOT_REPO_DIR
+    bash install.sh
+    cd -
+fi
+
 echo "Installing pyenv"
 git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 git clone https://github.com/concordusapps/pyenv-implict.git $HOME/.pyenv/plugins/pyenv-implict
@@ -33,6 +47,8 @@ pyenv install $PYTHON_VERSION
 pyenv rehash
 pyenv global $PYTHON_VERSION
 wget --quiet -O - https://bootstrap.pypa.io/get-pip.py | python -
+python -m ensurepip --upgrade
+python -m pip install tk-tools
 pip install virtualenv
 pip install virtualenvwrapper
 pip install pynvim
@@ -64,3 +80,8 @@ npm install -g neovim
 
 echo "Install oh my zsh"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
+echo "Configuring git"
+git config --global user.email "wiliamsouza83@gmail.com"
+git config --global user.name "Wiliam Souza"
