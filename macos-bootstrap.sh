@@ -15,6 +15,9 @@ mkdir -p $DEVEL_DIR
 mkdir -p $SOURCE_DIR
 mkdir -p $LOCAL_BIN
 
+export CPPFLAGS="-I$(brew --prefix)/include"
+export LDFLAGS="-L$(brew --prefix)/lib"
+
 if [ ! -d $DOT_REPO_DIR ]; then
     git clone https://github.com/wiliamsouza/dot.git $DOT_REPO_DIR
 fi
@@ -43,7 +46,7 @@ git clone https://github.com/concordusapps/pyenv-implict.git $HOME/.pyenv/plugin
 export PYENV_ROOT=$HOME/.pyenv
 export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init -)"
-pyenv install $PYTHON_VERSION
+env CONFIGURE_OPTS='--enable-optimizations' pyenv install $PYTHON_VERSION
 pyenv rehash
 pyenv global $PYTHON_VERSION
 wget --quiet -O - https://bootstrap.pypa.io/get-pip.py | python -
