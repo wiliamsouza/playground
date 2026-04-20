@@ -24,7 +24,7 @@ fi
 echo "Install brew"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-brew install wget neovim tree the_silver_searcher jq
+brew install wget neovim tree the_silver_searcher jq git-spicy gh
 
 echo "Installing docker-compose"
 if [ ! -f $LOCAL_BIN/docker-compose ]; then
