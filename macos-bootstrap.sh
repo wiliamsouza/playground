@@ -69,15 +69,13 @@ rbenv global $RUBY_VERSION
 gem install neovim
 gem environment
 
-echo "Installing nodenv"
-git clone https://github.com/nodenv/nodenv.git $HOME/.nodenv
-git clone https://github.com/nodenv/node-build.git $HOME/.nodenv/plugins/node-build
-export PATH=$HOME/.nodenv/bin:$PATH
-eval "$(nodenv init -)"
-nodenv install $NODE_VERSION
-nodenv rehash
-nodenv global $NODE_VERSION
-npm install --global  diff-so-fancy
+echo "Installing fnm"
+brew install fnm
+eval "$(fnm env)"
+fnm install $NODE_VERSION
+fnm use $NODE_VERSION
+fnm default $NODE_VERSION
+npm install --global diff-so-fancy
 npm install --global lerna
 npm install -g neovim
 
