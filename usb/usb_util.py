@@ -21,12 +21,13 @@ def getDevicesInfo():
 
     for device in usb.core.find(find_all=1):
         try:
-            device_data = {}
-            device_data['vendorId'] = device.idVendor
-            device_data['productId'] = device.idProduct
-            device_data['bus'] = device.bus
-            device_data['address'] = device.address
-            device_data['strings'] = []
+            device_data = {
+                'vendorId': device.idVendor,
+                'productId': device.idProduct,
+                'bus': device.bus,
+                'address': device.address,
+                'strings': [],
+            }
             # Check for string info in this range
             for n in range(9):
                 try:
